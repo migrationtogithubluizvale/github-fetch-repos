@@ -1,4 +1,3 @@
-/* globals window */
 import { useEffect, useState } from 'react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase/app'
@@ -7,7 +6,7 @@ import initFirebase from '../utils/auth/initFirebase'
 import { setUserCookie } from '../utils/auth/userCookies'
 import { mapUserData } from '../utils/auth/mapUserData'
 
-// Init the Firebase app.
+
 initFirebase()
 
 const firebaseAuthConfig = {

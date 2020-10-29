@@ -15,7 +15,7 @@ const Index = () => {
 
   const onSearchSubmit = (term) => {
     setIndex(1)
-    if(term.length > 0) setTerm(term.trim())
+    if(term.length > 0) setTerm(term)
   }
 
   if (!user) {
