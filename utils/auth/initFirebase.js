@@ -13,3 +13,4 @@ export default function initFirebase() {
     firebase.initializeApp(config)
   }
 }
+

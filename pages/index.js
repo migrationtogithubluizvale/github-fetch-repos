@@ -1,24 +1,26 @@
 import useSWR from 'swr'
 import Link from 'next/link'
+import { useState } from 'react'
 import { useUser } from '../utils/auth/useUser'
-
-const fetcher = (url, token) =>
-  fetch(url, {
-    method: 'GET',
-    headers: new Headers({ 'Content-Type': 'application/json', token }),
-    credentials: 'same-origin',
-  }).then((res) => res.json())
+import { fetcher } from './api/apiCall'
+import SearchBar from '../components/SearchBar'
+import 'semantic-ui-css/semantic.min.css'
 
 const Index = () => {
   const { user, logout } = useUser()
-  const { data, error } = useSWR(
-    user ? ['/api/getFood', user.token] : null,
-    fetcher
-  )
+  const [term, setTerm] = useState('default')
+  const [index, setIndex] = useState(1)
+
+  const { data, error } = useSWR(`https://api.github.com/users/${term}/repos?page=${index}`, fetcher)
+
+  const onSearchSubmit = (term) => {
+    setIndex(1)
+    if(term.length > 0) setTerm(term.trim())
+  }
+
   if (!user) {
     return (
       <>
-        <p>Hi there!</p>
         <p>
           You are not signed in.{' '}
           <Link href={'/auth'}>
@@ -31,6 +33,7 @@ const Index = () => {
 
   return (
     <div>
+      <SearchBar onSubmit={term => onSearchSubmit(term)} />
       <div>
         <p>You're signed in. Email: {user.email}</p>
         <p
@@ -45,17 +48,18 @@ const Index = () => {
           Log out
         </p>
       </div>
-      <div>
-        <Link href={'/example'}>
-          <a>Another example page</a>
-        </Link>
-      </div>
-      {error && <div>Failed to fetch food!</div>}
+      {error && <div>Failed to fetch repos !</div>}
       {data && !error ? (
-        <div>Your favorite food is {data.food}.</div>
+        <div style={{ textAlign: "center" }}>{!error && user && data && data.map(item => <div key={item.id}>{item.name}</div>)}</div>
       ) : (
-        <div>Loading...</div>
-      )}
+          <div>Loading...</div>
+        )}
+      {data && data.length >= 30 ? (
+        <>
+          <button onClick={() => setIndex(index - 1)}>Previous</button>
+          <button onClick={() => setIndex(index + 1)}>Next</button>
+        </>
+      ) : null}
     </div>
   )
 }

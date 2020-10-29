@@ -21,7 +21,6 @@ const useUser = () => {
       .auth()
       .signOut()
       .then(() => {
-        // Sign-out successful.
         router.push('/auth')
       })
       .catch((e) => {
@@ -30,9 +29,6 @@ const useUser = () => {
   }
 
   useEffect(() => {
-    // Firebase updates the id token every hour, this
-    // makes sure the react state and the cookie are
-    // both kept up to date
     const cancelAuthListener = firebase.auth().onIdTokenChanged((user) => {
       if (user) {
         const userData = mapUserData(user)
@@ -54,7 +50,6 @@ const useUser = () => {
     return () => {
       cancelAuthListener()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return { user, logout }

@@ -12,12 +12,11 @@ initFirebase()
 
 const firebaseAuthConfig = {
   signInFlow: 'popup',
-  // Auth providers
-  // https://github.com/firebase/firebaseui-web#configure-oauth-providers
   signInOptions: [
     {
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      requireDisplayName: false,
+      provider: firebase.auth.GithubAuthProvider.PROVIDER_ID,
+      requireDisplayName: true,
+      prompt: 'select_account'
     },
   ],
   signInSuccessUrl: '/',
@@ -31,8 +30,6 @@ const firebaseAuthConfig = {
 }
 
 const FirebaseAuth = () => {
-  // Do not SSR FirebaseUI, because it is not supported.
-  // https://github.com/firebase/firebaseui-web/issues/213
   const [renderAuth, setRenderAuth] = useState(false)
   useEffect(() => {
     if (typeof window !== 'undefined') {
