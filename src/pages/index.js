@@ -17,8 +17,6 @@ const Index = () => {
     if (term.length > 0) setTerm(term)
   }
 
-  console.log(error, data, "<<<<<")
-
   const ShowPageOnlyIf = onlyIf( ({ user }) => user, SignInSignOut)(GitHubReposFind)
 
   return (
