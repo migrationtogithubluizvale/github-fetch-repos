@@ -14,7 +14,6 @@ const firebaseAuthConfig = {
   signInOptions: [
     {
       provider: firebase.auth.GithubAuthProvider.PROVIDER_ID,
-      requireDisplayName: true,
       prompt: 'select_account'
     },
   ],

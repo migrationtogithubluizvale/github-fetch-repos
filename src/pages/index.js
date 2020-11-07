@@ -1,23 +1,20 @@
-import useSWR from 'swr'
-import onlyIf from 'react-only-if';
-import React, { useState }  from 'react';
-import { useUser } from '../utils/auth/useUser'
-import { fetcher } from './api/apiCall'
+import onlyIf from 'react-only-if'
+import React, { useState }  from 'react'
+import 'semantic-ui-css/semantic.min.css'
 import GitHubReposFind from '../components/GitHubReposFind'
 import SignInSignOut from '../components/SignInSignOut'
-import 'semantic-ui-css/semantic.min.css'
+import { useUser } from '../utils/auth/useUser'
+import { Requests } from './api/requests'
 
 const Index = () => {
   const { user, logout } = useUser()
   const [term, setTerm] = useState('default')
 
-  const { data, error } = useSWR(`https://api.github.com/users/${term}/repos`, fetcher)
-
-  const onSearchSubmit = (term) => {
-    if (term.length > 0) setTerm(term)
-  }
-
+  const { data, error } = Requests.getRepos(term)
+  const onSearchSubmit = term => setTerm(term)
   const ShowPageOnlyIf = onlyIf( ({ user }) => user, SignInSignOut)(GitHubReposFind)
+
+  console.log(data, "<<<<")
 
   return (
     <React.Fragment>
