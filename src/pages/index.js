@@ -17,15 +17,18 @@ const Index = () => {
     if (term.length > 0) setTerm(term)
   }
 
+  console.log(error, data, "<<<<<")
+
   const ShowPageOnlyIf = onlyIf( ({ user }) => user, SignInSignOut)(GitHubReposFind)
 
   return (
     <React.Fragment>
       <ShowPageOnlyIf
         user={user}
+        data={data}
+        error={error}
         onSearchSubmit={onSearchSubmit}
         logout={logout}
-        res={data || error}
       />
     </React.Fragment>
   )
