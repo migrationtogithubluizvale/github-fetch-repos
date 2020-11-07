@@ -14,8 +14,6 @@ const Index = () => {
   const onSearchSubmit = term => setTerm(term)
   const ShowPageOnlyIf = onlyIf( ({ user }) => user, SignInSignOut)(GitHubReposFind)
 
-  console.log(data, "<<<<")
-
   return (
     <React.Fragment>
       <ShowPageOnlyIf
