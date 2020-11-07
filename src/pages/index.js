@@ -1,10 +1,10 @@
 import useSWR from 'swr'
 import onlyIf from 'react-only-if';
 import React, { useState }  from 'react';
-import { useUser } from '../auth/useUser'
+import { useUser } from '../utils/auth/useUser'
 import { fetcher } from './api/apiCall'
-import GitHubReposFind from '../../components/GitHubReposFind'
-import SignInSignOut from '../../components/SignInSignOut'
+import GitHubReposFind from '../components/GitHubReposFind'
+import SignInSignOut from '../components/SignInSignOut'
 import 'semantic-ui-css/semantic.min.css'
 
 const Index = () => {
